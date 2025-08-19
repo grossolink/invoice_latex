@@ -17,25 +17,56 @@
 - 商品内容
 - 条款条件
 
-## 📋 发票内容格式
+## 📋 LaTeX语法和例子
 
-### 商品描述格式
+### 客户信息
+```latex
+\projectname{项目名称}
+\payeename{客户公司名}
+\payeeaddresslineone{客户地址行1}
+\payeeaddresslinetwo{客户地址行2}
+\payeecontactlineone{客户邮箱}
+\payeecontactlinetwo{客户网站}
 ```
-第一行：产品名称 + 型号
-第二行：产品详细描述（字体75%）
-第三行：Unit: [单位] + L/T: [交期状态]
+
+### 发件人信息
+```latex
+\sendername{发件人公司名}
+\senderaddresslineone{发件人地址行1}
+\senderaddresslinetwo{发件人地址行2}
+\sendercontactlineone{发件人邮箱}
+\sendercontactlinetwo{发件人电话}
 ```
 
-### 数量格式
-- 纯数字：`1`, `5`, `10`
+### 发票号码
+```latex
+\invoiceref{发票号码}
+```
 
-### 价格格式
-- 欧元：`EUR`
-- 两位小数：`118.80`
-- 免费：`0.00`
+### 商品项目
+```latex
+\invoiceitem{1}{产品名称 \quad 型号 \\ {\fontsize{7.5}{9}\selectfont 产品详细描述 \\ Unit: 单位 \quad L/T: 交期状态}}{数量}{单价}
 
-### 条款格式
-- 每条一行
-- 用 `\\` 换行
-- 编号：`1.`, `2.`, `3.`
-- 加粗重要信息：`\textbf{Payment Terms:} TT in advance`
+\rowcolor{altrowcolor}
+\invoiceitem{2}{产品名称 \quad 型号 \\ {\fontsize{7.5}{9}\selectfont 产品详细描述 \\ Unit: 单位 \quad L/T: 交期状态}}{数量}{单价}
+```
+
+### 实际例子
+```latex
+\invoiceitem{1}{Conntek \quad EVM5700 \\ {\fontsize{7.5}{9}\selectfont EVM for Low Power, High Precision \\ Unit: SET \quad L/T: In Stock}}{1}{118.80}
+
+\rowcolor{altrowcolor}
+\invoiceitem{2}{Conntek \quad 5701AQ3QNS \\ {\fontsize{7.5}{9}\selectfont 3D Hal sensor IC, consumer grade, QFN3x3-16L \\ Unit: PCS \quad L/T: In Stock}}{5}{0.55}
+```
+
+### 条款条件
+```latex
+\termsandconditions{
+1. Item 1 and 2 are currently in stock, ready to ship.\\
+2. Item 3 and 4 are free samples.\\
+3. \textbf{Payment Terms:} TT in advance\\
+4. \textbf{Validity Period:} till 30th Aug 2025\\
+5. \textbf{Currency:} EUR\\
+6. \textbf{Warranty Period:} 12 months since delivery date
+}
+```
