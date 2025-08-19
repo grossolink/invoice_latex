@@ -1,10 +1,10 @@
 # 发票内容格式要求
 
 ## 🚫 不能改的部分
-- 所有 `\usepackage{...}` 命令
-- `\geometry{...}` 参数
-- `\definecolor{...}` 命令
-- 所有 `\newcommand{...}` 和 `\newenvironment{...}`
+- 所有包引用命令
+- 页面设置参数
+- 颜色定义命令
+- 所有命令定义和环境定义
 - 表格列宽设置
 - 页眉页脚设置
 - 字体大小命令
@@ -17,56 +17,58 @@
 - 商品内容
 - 条款条件
 
-## 📋 LaTeX语法和例子
+## 📋 发票内容示例
 
 ### 客户信息
-```latex
-\projectname{项目名称}
-\payeename{客户公司名}
-\payeeaddresslineone{客户地址行1}
-\payeeaddresslinetwo{客户地址行2}
-\payeecontactlineone{客户邮箱}
-\payeecontactlinetwo{客户网站}
-```
+项目名称：Sensor Components
+客户公司名：Sensitec GmbH
+客户地址行1：Schanzenfeldstr. 2
+客户地址行2：D-35578 Wetzlar
+客户邮箱：info@sensitec.com
+客户网站：www.sensitec.com
 
 ### 发件人信息
-```latex
-\sendername{发件人公司名}
-\senderaddresslineone{发件人地址行1}
-\senderaddresslinetwo{发件人地址行2}
-\sendercontactlineone{发件人邮箱}
-\sendercontactlinetwo{发件人电话}
-```
+发件人公司名：Grosso Link GMBH
+发件人地址行1：Rue des Sugiez 18
+发件人地址行2：2074 Marin-Epagnier
+发件人邮箱：contacts@grosso.link
+发件人电话：+41 788885186
 
 ### 发票号码
-```latex
-\invoiceref{发票号码}
-```
+1632-F
 
 ### 商品项目
-```latex
-\invoiceitem{1}{产品名称 \quad 型号 \\ {\fontsize{7.5}{9}\selectfont 产品详细描述 \\ Unit: 单位 \quad L/T: 交期状态}}{数量}{单价}
+1. Conntek EVM5700
+   EVM for Low Power, High Precision
+   Unit: SET, L/T: In Stock
+   数量：1, 单价：118.80
 
-\rowcolor{altrowcolor}
-\invoiceitem{2}{产品名称 \quad 型号 \\ {\fontsize{7.5}{9}\selectfont 产品详细描述 \\ Unit: 单位 \quad L/T: 交期状态}}{数量}{单价}
-```
+2. Conntek 5701AQ3QNS
+   3D Hal sensor IC, consumer grade, QFN3x3-16L
+   Unit: PCS, L/T: In Stock
+   数量：5, 单价：0.55
 
-### 实际例子
-```latex
-\invoiceitem{1}{Conntek \quad EVM5700 \\ {\fontsize{7.5}{9}\selectfont EVM for Low Power, High Precision \\ Unit: SET \quad L/T: In Stock}}{1}{118.80}
+3. Conntek KTM1301TE-TO3
+   TMR switch
+   Unit: PCS
+   数量：10, 单价：0.00
 
-\rowcolor{altrowcolor}
-\invoiceitem{2}{Conntek \quad 5701AQ3QNS \\ {\fontsize{7.5}{9}\selectfont 3D Hal sensor IC, consumer grade, QFN3x3-16L \\ Unit: PCS \quad L/T: In Stock}}{5}{0.55}
-```
+4. Conntek KTM1301TD-TO3
+   TMR switch
+   Unit: PCS
+   数量：10, 单价：0.00
+
+5. Logistic service
+   Small parcel to EU country < 500g, with tracking number
+   数量：1, 单价：25.00
 
 ### 条款条件
-```latex
-\termsandconditions{
-1. Item 1 and 2 are currently in stock, ready to ship.\\
-2. Item 3 and 4 are free samples.\\
-3. \textbf{Payment Terms:} TT in advance\\
-4. \textbf{Validity Period:} till 30th Aug 2025\\
-5. \textbf{Currency:} EUR\\
-6. \textbf{Warranty Period:} 12 months since delivery date
-}
-```
+1. Item 1 and 2 are currently in stock, ready to ship.
+2. Item 3 and 4 are free samples.
+3. Payment Terms: TT in advance
+4. Validity Period: till 30th Aug 2025
+5. Delivery cost: The price does not include freight insurance.
+6. Currency: EUR
+7. Warranty Period: 12 months since delivery date
+8. Date Code: within 6 months
+9. Remarks: L/T can be shorter when ordering small quantities
