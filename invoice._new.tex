@@ -1,0 +1,349 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wile E. Invoice
+% Complete LaTeX Template
+% Version 1.0（含满版页头：eso-pic 方案）
+%
+% 原始模板来源:
+% http://www.LaTeXTemplates.com
+%
+% 作者:
+% Peter Morrison-Whittle
+% Vel (vel@LaTeXTemplates.com)
+%
+% 许可证:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+% 文档类与页面
+%----------------------------------------------------------------------------------------
+\documentclass[10pt]{article}
+
+\usepackage[
+	a4paper,
+	top=0cm,
+	bottom=2.5cm,
+	left=1cm,
+	right=1cm,
+	footskip=50pt
+]{geometry}
+
+\setlength\parindent{0pt}
+
+%----------------------------------------------------------------------------------------
+% 字体与编码
+%----------------------------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tgadventor}
+\renewcommand*\familydefault{\sfdefault}
+
+%----------------------------------------------------------------------------------------
+% 常用宏包
+%----------------------------------------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{fp}
+\usepackage[group-separator={,},group-minimum-digits=4,detect-all]{siunitx}
+\usepackage{advdate}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{afterpage}
+\def\arraystretch{1.2}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%--- TikZ + eso-pic（用于整页叠加满版页头） ---
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{eso-pic}
+
+% 圆角矩形背景命令
+\usepackage{tcolorbox}
+\newcommand{\roundedbox}[2][highlightcolour]{%
+  \tcbox[on line, boxrule=0pt, colback=#1, coltext=white, arc=3pt, boxsep=3pt]{#2}%
+}
+
+%----------------------------------------------------------------------------------------
+% 颜色
+%----------------------------------------------------------------------------------------
+\definecolor{highlightcolour}{HTML}{C30D23} % 页头红、强调色
+\definecolor{rulecolour}{HTML}{B2BEB5}      % 规则线灰
+\definecolor{altrowcolor}{gray}{0.98}       % 非常浅的灰色（隔行背景色）
+
+%----------------------------------------------------------------------------------------
+% 页脚设置
+%----------------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{} % 清除所有页眉页脚
+\renewcommand{\headrulewidth}{0pt} % 移除页眉线
+\renewcommand{\footrulewidth}{0pt} % 移除页脚线
+\fancyfoot[L]{%
+  \raisebox{\dimexpr0.5\textheight-0.75cm\relax}{%
+    \IfFileExists{logo.png}{%
+      \includegraphics[height=1.5cm]{logo.png}%
+    }{%
+      \fbox{\parbox[c][1.5cm]{3cm}{\centering\footnotesize LOGO\\PLACEHOLDER}}%
+    }%
+  }%
+} % 左侧垂直居中logo（考虑logo高度的精确居中）
+
+\fancyfoot[R]{%
+  \raisebox{\dimexpr0.5\textheight-0.75cm\relax}{%
+    \footnotesize\thepage/\pageref{LastPage}%
+  }%
+} % 右侧垂直居中页码，与logo同一水平线
+
+%----------------------------------------------------------------------------------------
+% 变量命令
+%----------------------------------------------------------------------------------------
+\newcommand{\payeename}[1]{\renewcommand{\payeename}{#1}}
+\newcommand{\payeejob}[1]{\renewcommand{\payeejob}{#1}}
+\newcommand{\payeeaddresslineone}[1]{\renewcommand{\payeeaddresslineone}{#1}}
+\newcommand{\payeeaddresslinetwo}[1]{\renewcommand{\payeeaddresslinetwo}{#1}}
+\newcommand{\payeecontactlineone}[1]{\renewcommand{\payeecontactlineone}{#1}}
+\newcommand{\payeecontactlinetwo}[1]{\renewcommand{\payeecontactlinetwo}{#1}}
+
+\newcommand{\invoiceref}[1]{\renewcommand{\invoiceref}{#1}}
+\newcommand{\invoiceissued}[1]{\renewcommand{\invoiceissued}{#1}}
+\newcommand{\invoicedue}[1]{\renewcommand{\invoicedue}{#1}}
+\newcommand{\projectname}[1]{\renewcommand{\projectname}{#1}}
+
+\newcommand{\companyname}[1]{\renewcommand{\companyname}{#1}}
+\newcommand{\sendername}[1]{\renewcommand{\sendername}{#1}}
+\newcommand{\senderjob}[1]{\renewcommand{\senderjob}{#1}}
+\newcommand{\senderaddresslineone}[1]{\renewcommand{\senderaddresslineone}{#1}}
+\newcommand{\senderaddresslinetwo}[1]{\renewcommand{\senderaddresslinetwo}{#1}}
+\newcommand{\sendercontactlineone}[1]{\renewcommand{\sendercontactlineone}{#1}}
+\newcommand{\sendercontactlinetwo}[1]{\renewcommand{\sendercontactlinetwo}{#1}}
+
+\newcommand{\termsandconditions}[1]{\renewcommand{\termsandconditions}{#1}}
+
+% 运行/累计变量
+\gdef\variableA{0}
+\gdef\variableB{0}
+\gdef\variableC{0}
+\gdef\variableD{0}
+\gdef\TotalA{0} % 税前
+\gdef\TotalB{0} % 税额
+\gdef\TotalC{0} % 税后
+\newcommand{\taxrate}[1]{\renewcommand{\taxrate}{#1}}
+
+%----------------------------------------------------------------------------------------
+% 收件人信息区
+%----------------------------------------------------------------------------------------
+\newcommand{\invoicedtotable}{
+  {\footnotesize
+  \begin{tabular*}{\textwidth}{@{}p{0.22\textwidth}@{\extracolsep{\fill}}p{0.22\textwidth}@{\extracolsep{\fill}}p{0.23\textwidth}@{\extracolsep{\fill}}p{0.22\textwidth}@{}}
+    \arrayrulecolor{rulecolour}\toprule[0.5pt]
+    \textbf{Recipient} & & & \\
+    {\large\textbf{\payeename}} & \payeeaddresslineone & info@sensitec.com & \\
+     & \payeeaddresslinetwo & \payeecontactlineone & \\
+     & Deutschland & \payeecontactlinetwo & \\
+    \arrayrulecolor{rulecolour}\bottomrule[0.5pt]
+  \end{tabular*}}
+}
+
+%----------------------------------------------------------------------------------------
+% 满版页头（eso-pic 版本）
+%----------------------------------------------------------------------------------------
+% 参数为高度，默认 3.2cm。红色覆盖到纸张四边；左侧显示 \companyname（白字），右侧显示图片。
+\newcommand{\invoiceheader}[1][3.2cm]{%
+  \AddToShipoutPictureFG*{%
+    \AtPageUpperLeft{%
+      \begin{tikzpicture}[remember picture,overlay]
+        % 红色矩形：从纸张左上角 (0,0) 到 (paperwidth, -#1)
+        \fill[highlightcolour] (0,0) rectangle (\paperwidth,-#1);
+        % 左侧标题：水平 1cm（与表格左边对齐），垂直 -#1/2
+        \node[text=white,align=left,anchor=west] at (1cm,-0.5*#1)
+          {{\fontsize{36}{40}\selectfont \companyname}};
+        % 右上角发票信息：水平 paperwidth-1cm，垂直 -1cm，右对齐
+        \node[anchor=north east] at (\paperwidth-1cm,-1cm) {%
+          \textcolor{white}{%
+            \begin{tabular}{@{}r@{}}
+              \footnotesize NO. \invoiceref \\
+              \footnotesize \today \\
+              \footnotesize Project: \projectname
+            \end{tabular}%
+          }%
+        };
+      \end{tikzpicture}%
+    }%
+  }%
+  % 为正文让出空间并留白
+  \vspace*{#1}\vspace{0.8cm}%
+}
+
+%----------------------------------------------------------------------------------------
+% 发票项目表格
+%----------------------------------------------------------------------------------------
+\newenvironment{invoicetable}
+{
+  \begin{longtable}{@{}c@{\extracolsep{\fill}}p{0.48\textwidth}@{\extracolsep{\fill}}R{0.08\textwidth}@{\extracolsep{\fill}}R{0.16\textwidth}@{\extracolsep{\fill}}R{0.16\textwidth}@{}}
+    \textbf{NO.} & \textbf{ITEM} & \textbf{QTY} & \textbf{UNIT PRICE} & \textbf{SUBTOTAL} \\
+    \arrayrulecolor{rulecolour}\toprule[0.5pt]
+    \endfirsthead
+    
+    % 第二页起的表头 - 添加顶部空间
+    \multicolumn{5}{@{}l@{}}{\vspace{2cm}} \\
+    \textbf{NO.} & \textbf{ITEM} & \textbf{QTY} & \textbf{UNIT PRICE} & \textbf{SUBTOTAL} \\
+    \arrayrulecolor{rulecolour}\toprule[0.5pt]
+    \endhead
+    
+    \arrayrulecolor{rulecolour}\bottomrule[0.5pt]
+    \endfoot
+    
+    \arrayrulecolor{rulecolour}\bottomrule[0.5pt]
+    \\[-1em]
+    &&& Gross & EUR \num{\TotalA} \\
+    &&& Tax   & EUR \num{\TotalB} \\
+    &&& Net   & EUR \num{\TotalC} \\
+    \endlastfoot
+}{
+  \end{longtable}
+}
+
+%----------------------------------------------------------------------------------------
+% 条款与应付总额
+%----------------------------------------------------------------------------------------
+\newcommand{\amountdue}{
+  {\footnotesize
+  \begin{tabular*}{\textwidth}{@{}>{\arraybackslash}m{0.55\textwidth}@{\extracolsep{\fill}}p{0.05\textwidth}@{\extracolsep{\fill}}R{0.35\textwidth}@{}}
+    \textbf{Terms and Conditions} & & \textbf{Amount Due} \\
+    \arrayrulecolor{rulecolour}\toprule[0.5pt]\\[-1.25em]
+    \termsandconditions & & \roundedbox{\Huge EUR \num{\TotalC}}\\
+  \end{tabular*}}
+}
+
+%----------------------------------------------------------------------------------------
+% 寄件方联系信息
+%----------------------------------------------------------------------------------------
+\newcommand{\contactdetails}{
+  {\footnotesize
+  \begin{tabular*}{\textwidth}{@{}p{0.22\textwidth}@{\extracolsep{\fill}}p{0.22\textwidth}@{\extracolsep{\fill}}p{0.23\textwidth}@{\extracolsep{\fill}}p{0.22\textwidth}@{}}
+    \arrayrulecolor{rulecolour}\toprule[0.5pt]
+    \textbf{Sender} & & & \multirow{4}{0.22\textwidth}{\hfill\roundedbox{\Huge THANKS}}\\
+    {\large\textbf{\sendername}} & \senderaddresslineone & \sendercontactlineone & \\
+     & \senderaddresslinetwo & \sendercontactlinetwo & \\
+     & Switzerland & http://grosso.link & \\
+    \arrayrulecolor{rulecolour}\bottomrule[0.5pt]
+  \end{tabular*}}
+}
+
+%----------------------------------------------------------------------------------------
+% 发票项目行
+%----------------------------------------------------------------------------------------
+\newcommand{\invoiceitem}[4]{%
+  % 行小计
+  \FPmul\gross{#3}{#4}\FPround\gross{\gross}{2}
+  \global\let\variableA\gross
+  % 累计
+  \FPeval{\beforetax}{round(\TotalA + \variableA, 2)} \global\let\TotalA\beforetax
+  \FPeval{\tax}{round(\TotalA * \taxrate, 2)}       \global\let\TotalB\tax
+  \FPeval{\aftertax}{round(\TotalA + \TotalB, 2)}   \global\let\TotalC\aftertax
+  % 输出
+  #1 &
+  \begin{minipage}[t]{0.48\textwidth}#2\end{minipage} &
+  \num{#3} & EUR \num{#4} & EUR \num{\variableA} \\
+}
+
+%----------------------------------------------------------------------------------------
+% 发票环境
+%----------------------------------------------------------------------------------------
+\newenvironment{invoice}
+{
+  \thispagestyle{fancy}
+  % 满版红色页头
+  \invoiceheader[3.2cm]
+
+  % 收件人信息 + 分隔线
+  \invoicedtotable
+  \vspace{0.5cm}
+  \textcolor{rulecolour}{\rule{\textwidth}{0.5pt}}
+  \vspace{0.5cm}
+  
+  \vfill
+}{
+  \vfill
+  \amountdue
+  \vfill
+  \contactdetails
+}
+
+%----------------------------------------------------------------------------------------
+% 发票信息设置
+%----------------------------------------------------------------------------------------
+\taxrate{0.15}
+
+\invoiceref{1632-F}
+\invoiceissued{September 23, 2021}
+\invoicedue{September 30, 2021}
+\projectname{Sensor Components}
+
+% 收件人
+\payeename{Sensitec GmbH}
+\payeejob{}
+\payeeaddresslineone{Schanzenfeldstr. 2}
+\payeeaddresslinetwo{D-35578 Wetzlar, Deutschland}
+\payeecontactlineone{}
+\payeecontactlinetwo{}
+
+% 寄件方 / 页头标题
+\companyname{INVOICE}
+\sendername{Grosso Link GMBH}
+\senderjob{}
+\senderaddresslineone{Rue des Sugiez 18}
+\senderaddresslinetwo{2074 Marin-Epagnier}
+\sendercontactlineone{contacts@grosso.link}
+\sendercontactlinetwo{+41 788885186}
+
+\termsandconditions{\textbf{Stock Status:} Item 1 and 2 are currently in stock, ready to ship. Item 3 and 4 are free samples. \newline\newline \textbf{Payment Terms:} TT in advance \newline \textbf{Validity Period:} till 30th Aug 2025 \newline \textbf{Delivery Cost:} The price does not include freight insurance \newline \textbf{Currency:} EUR \newline \textbf{Warranty Period:} 12 months since delivery date \newline \textbf{Date Code:} within 6 months \newline \textbf{Remarks:} L/T can be shorter when ordering small quantities}
+
+%----------------------------------------------------------------------------------------
+% 文档
+%----------------------------------------------------------------------------------------
+% 设置第一页后的页面边距 - 使用更可靠的方法
+
+\begin{document}
+
+\begin{invoice}
+  \begin{invoicetable}
+    \invoiceitem{1}{Conntek \quad EVM5700 \\ {\fontsize{7.5}{9}\selectfont EVM for Low Power, High Precision \\ Unit: SET \quad L/T: In Stock}}{1}{118.80}
+    \rowcolor{altrowcolor}
+    \invoiceitem{2}{Conntek \quad 5701AQ3QNS \\ {\fontsize{7.5}{9}\selectfont 3D Hal sensor IC, consumer grade, QFN3x3-16L \\ Unit: PCS \quad L/T: In Stock}}{5}{0.55}
+    \invoiceitem{3}{Conntek \quad KTM1301TE-TO3 \\ {\fontsize{7.5}{9}\selectfont TMR switch \\ Unit: PCS}}{10}{0.00}
+    \rowcolor{altrowcolor}
+    \invoiceitem{4}{Conntek \quad KTM1301TD-TO3 \\ {\fontsize{7.5}{9}\selectfont TMR switch \\ Unit: PCS}}{10}{0.00}
+    \invoiceitem{5}{Logistic service \\ {\fontsize{7.5}{9}\selectfont Small parcel to EU country < 500g, with tracking number}}{1}{25.00}
+    \rowcolor{altrowcolor}
+    \invoiceitem{6}{Conntek \quad EVM5700 \\ {\fontsize{7.5}{9}\selectfont EVM for Low Power, High Precision \\ Unit: SET \quad L/T: In Stock}}{1}{118.80}
+    \invoiceitem{7}{Conntek \quad 5701AQ3QNS \\ {\fontsize{7.5}{9}\selectfont 3D Hal sensor IC, consumer grade, QFN3x3-16L \\ Unit: PCS \quad L/T: In Stock}}{5}{0.55}
+    \rowcolor{altrowcolor}
+    \invoiceitem{8}{Conntek \quad KTM1301TE-TO3 \\ {\fontsize{7.5}{9}\selectfont TMR switch \\ Unit: PCS}}{10}{0.00}
+    \invoiceitem{9}{Conntek \quad KTM1301TD-TO3 \\ {\fontsize{7.5}{9}\selectfont TMR switch \\ Unit: PCS}}{10}{0.00}
+    \rowcolor{altrowcolor}
+    \invoiceitem{10}{Logistic service \\ {\fontsize{7.5}{9}\selectfont Small parcel to EU country < 500g, with tracking number}}{1}{25.00}
+    \invoiceitem{11}{Conntek \quad EVM5700 \\ {\fontsize{7.5}{9}\selectfont EVM for Low Power, High Precision \\ Unit: SET \quad L/T: In Stock}}{1}{118.80}
+    \rowcolor{altrowcolor}
+    \invoiceitem{12}{Conntek \quad 5701AQ3QNS \\ {\fontsize{7.5}{9}\selectfont 3D Hal sensor IC, consumer grade, QFN3x3-16L \\ Unit: PCS \quad L/T: In Stock}}{5}{0.55}
+    \invoiceitem{13}{Conntek \quad KTM1301TE-TO3 \\ {\fontsize{7.5}{9}\selectfont TMR switch \\ Unit: PCS}}{10}{0.00}
+    \rowcolor{altrowcolor}
+    \invoiceitem{14}{Conntek \quad KTM1301TD-TO3 \\ {\fontsize{7.5}{9}\selectfont TMR switch \\ Unit: PCS}}{10}{0.00}
+    \invoiceitem{15}{Logistic service \\ {\fontsize{7.5}{9}\selectfont Small parcel to EU country < 500g, with tracking number}}{1}{25.00}
+    \rowcolor{altrowcolor}
+    \invoiceitem{16}{Conntek \quad EVM5700 \\ {\fontsize{7.5}{9}\selectfont EVM for Low Power, High Precision \\ Unit: SET \quad L/T: In Stock}}{1}{118.80}
+    \invoiceitem{17}{Conntek \quad 5701AQ3QNS \\ {\fontsize{7.5}{9}\selectfont 3D Hal sensor IC, consumer grade, QFN3x3-16L \\ Unit: PCS \quad L/T: In Stock}}{5}{0.55}
+    \rowcolor{altrowcolor}
+    \invoiceitem{18}{Conntek \quad KTM1301TE-TO3 \\ {\fontsize{7.5}{9}\selectfont TMR switch \\ Unit: PCS}}{10}{0.00}
+    \invoiceitem{19}{Conntek \quad KTM1301TD-TO3 \\ {\fontsize{7.5}{9}\selectfont TMR switch \\ Unit: PCS}}{10}{0.00}
+    \rowcolor{altrowcolor}
+    \invoiceitem{20}{Logistic service \\ {\fontsize{7.5}{9}\selectfont Small parcel to EU country < 500g, with tracking number}}{1}{25.00}
+  \end{invoicetable}
+\end{invoice}
+
+\end{document}
