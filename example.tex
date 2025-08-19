@@ -1,0 +1,139 @@
+\documentclass[10pt]{article}
+
+\usepackage[
+	a4paper,
+	top=0cm,
+	bottom=2.5cm,
+	left=1cm,
+	right=1cm,
+	footskip=60pt
+]{geometry}
+
+\setlength\parindent{0pt}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tgadventor}
+\renewcommand*\familydefault{\sfdefault}
+
+\usepackage{graphicx}
+\usepackage{fp}
+\usepackage[group-separator={,},group-minimum-digits=4,detect-all]{siunitx}
+\usepackage{advdate}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{afterpage}
+\def\arraystretch{1.2}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{eso-pic}
+
+\usepackage{tcolorbox}
+\newcommand{\roundedbox}[2][highlightcolour]{%
+  \tcbox[on line, boxrule=0pt, colback=#1, coltext=white, arc=3pt, boxsep=3pt]{#2}%
+}
+
+\definecolor{highlightcolour}{HTML}{C30D23}
+\definecolor{rulecolour}{HTML}{B2BEB5}
+\definecolor{altrowcolor}{gray}{0.98}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[L]{%
+  \raisebox{\dimexpr0.5\textheight-0.75cm\relax}{%
+    \IfFileExists{logo.png}{%
+      \includegraphics[height=1.5cm]{logo.png}%
+    }{%
+      \fbox{\parbox[c][1.5cm]{3cm}{\centering\footnotesize LOGO\\PLACEHOLDER}}%
+    }%
+  }%
+}
+\fancyfoot[R]{%
+  \raisebox{\dimexpr0.5\textheight-0.75cm\relax}{%
+    \footnotesize\thepage/\pageref{LastPage}%
+  }%
+}
+
+% ---------------- Variables ----------------
+\newcommand{\payeename}{Sensitec GmbH}
+\newcommand{\payeeaddresslineone}{Schanzenfeldstr. 2}
+\newcommand{\payeeaddresslinetwo}{D-35578 Wetzlar}
+\newcommand{\payeecontactlineone}{info@sensitec.com}
+\newcommand{\payeecontactlinetwo}{www.sensitec.com}
+
+\newcommand{\invoiceref}{1632-F}
+\newcommand{\invoiceissued}{2025-08-19}
+\newcommand{\invoicedue}{2025-08-30}
+\newcommand{\projectname}{Sensor Components}
+
+\newcommand{\companyname}{Grosso Link GMBH}
+\newcommand{\senderaddresslineone}{Rue des Sugiez 18}
+\newcommand{\senderaddresslinetwo}{2074 Marin-Epagnier}
+\newcommand{\sendercontactlineone}{contacts@grosso.link}
+\newcommand{\sendercontactlinetwo}{+41 788885186}
+
+\newcommand{\taxrate}{0}
+\newcommand{\termsandconditions}{%
+1. Item 1 and 2 are currently in stock, ready to ship.\\
+2. Item 3 and 4 are free samples.\\
+3. Payment Terms: TT in advance.\\
+4. Validity Period: till 30th Aug 2025.\\
+5. Delivery cost: The price does not include freight insurance.\\
+6. Currency: EUR.\\
+7. Warranty Period: 12 months since delivery date.\\
+8. Date Code: within 6 months.\\
+9. Remarks: L/T can be shorter when ordering small quantities.%
+}
+
+% ---------------- Document ----------------
+\begin{document}
+
+% Recipient block
+\begin{tabular*}{\textwidth}{@{}p{0.5\textwidth}@{\extracolsep{\fill}}p{0.5\textwidth}@{}}
+  \textbf{Recipient:} \payeename & \textbf{Invoice Ref:} \invoiceref \\
+  \payeeaddresslineone & \textbf{Invoice Date:} \invoiceissued \\
+  \payeeaddresslinetwo & \textbf{Due Date:} \invoicedue \\
+  \payeecontactlineone & \textbf{Project:} \projectname \\
+  \payeecontactlinetwo & \\
+\end{tabular*}
+
+\vspace{1cm}
+
+% Items table
+\rowcolors{2}{altrowcolor}{white}
+\begin{longtable}{p{0.4\textwidth} p{0.25\textwidth} R{0.1\textwidth} R{0.15\textwidth} R{0.1\textwidth}}
+\arrayrulecolor{rulecolour}\toprule
+\textbf{Item} & \textbf{Unit} & \textbf{Qty} & \textbf{Unit Price (EUR)} & \textbf{Total (EUR)} \\
+\midrule
+Conntek EVM5700 \\ EVM for Low Power, High Precision & SET (In Stock) & 1 & 118.80 & 118.80 \\
+Conntek 5701AQ3QNS \\ 3D Hal sensor IC, consumer grade, QFN3x3-16L & PCS (In Stock) & 5 & 0.55 & 2.75 \\
+Conntek KTM1301TE-TO3 \\ TMR switch & PCS & 10 & 0.00 & 0.00 \\
+Conntek KTM1301TD-TO3 \\ TMR switch & PCS & 10 & 0.00 & 0.00 \\
+Logistic service \\ Small parcel to EU country < 500g, with tracking number & Service & 1 & 25.00 & 25.00 \\
+\arrayrulecolor{rulecolour}\bottomrule
+\end{longtable}
+
+\vspace{0.5cm}
+
+\textbf{Terms and Conditions:}\\
+\termsandconditions
+
+\vfill
+
+\textbf{Sender:} \companyname \\
+\senderaddresslineone \\
+\senderaddresslinetwo \\
+\sendercontactlineone \\
+\sendercontactlinetwo
+
+\end{document}
