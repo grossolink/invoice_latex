@@ -1,0 +1,323 @@
+%----------------------------------------------------------------------------------------
+% 文档类与页面
+%----------------------------------------------------------------------------------------
+\documentclass[10pt]{article}
+
+\usepackage[
+  a4paper,
+  top=0cm,
+  bottom=3.5cm,
+  left=1cm,
+  right=1cm,
+  footskip=50pt
+]{geometry}
+
+\setlength\parindent{0pt}
+
+%----------------------------------------------------------------------------------------
+% 字体与编码
+%----------------------------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tgadventor}
+\renewcommand*\familydefault{\sfdefault}
+
+%----------------------------------------------------------------------------------------
+% 常用宏包
+%----------------------------------------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{fp}
+\usepackage[group-separator={,},group-minimum-digits=4,detect-all,round-mode=places,round-precision=2]{siunitx}
+\usepackage{advdate}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{afterpage}
+\usepackage{ifthen}
+\def\arraystretch{1.2}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%--- TikZ + eso-pic（用于整页叠加满版页头） ---
+\usepackage{tikz}
+\usepackage{pgffor}
+\usetikzlibrary{calc}
+\usepackage{eso-pic}
+
+% 圆角矩形背景命令
+\usepackage{tcolorbox}
+\newcommand{\roundedbox}[2][highlightcolour]{%
+  \tcbox[on line, boxrule=0pt, colback=#1, coltext=white, arc=3pt, boxsep=3pt]{#2}%
+}
+
+%----------------------------------------------------------------------------------------
+% 颜色
+%----------------------------------------------------------------------------------------
+\definecolor{highlightcolour}{HTML}{C30D23}
+\definecolor{rulecolour}{HTML}{B2BEB5}
+\definecolor{altrowcolor}{gray}{0.98}
+
+%----------------------------------------------------------------------------------------
+% 页脚设置
+%----------------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\fancyfoot[L]{%
+  \raisebox{-0.3\height}{%
+    \IfFileExists{logo.png}{%
+      \includegraphics[height=1.5cm]{logo.png}%
+    }{%
+      \fbox{\parbox[c][1.5cm]{3cm}{\centering\footnotesize LOGO\\PLACEHOLDER}}%
+    }%
+  }%
+}
+\fancyfoot[R]{%
+  \raisebox{-0.3\height}{\footnotesize\thepage/\pageref{LastPage}}%
+}
+
+%----------------------------------------------------------------------------------------
+% 变量命令
+%----------------------------------------------------------------------------------------
+\newcommand{\payeename}[1]{\renewcommand{\payeename}{#1}}
+\newcommand{\payeeaddress}[1]{\renewcommand{\payeeaddress}{#1}}
+\newcommand{\payeecontact}[1]{\renewcommand{\payeecontact}{#1}}
+\newcommand{\payeeextra}[1]{\renewcommand{\payeeextra}{#1}}
+
+\newcommand{\invoiceref}[1]{\renewcommand{\invoiceref}{#1}}
+\newcommand{\invoiceissued}[1]{\renewcommand{\invoiceissued}{#1}}
+\newcommand{\invoicedue}[1]{\renewcommand{\invoicedue}{#1}}
+\newcommand{\projectname}[1]{\renewcommand{\projectname}{#1}}
+
+\newcommand{\invoicetitle}[1]{\renewcommand{\invoicetitle}{#1}}
+\newcommand{\sendername}[1]{\renewcommand{\sendername}{#1}}
+\newcommand{\senderaddress}[1]{\renewcommand{\senderaddress}{#1}}
+\newcommand{\sendercontact}[1]{\renewcommand{\sendercontact}{#1}}
+\newcommand{\senderextra}[1]{\renewcommand{\senderextra}{#1}}
+
+\newcommand{\termsandconditions}[1]{\renewcommand{\termsandconditions}{#1}}
+
+% 运行/累计变量
+\gdef\variableA{0}
+\gdef\variableB{0}
+\gdef\variableC{0}
+\gdef\variableD{0}
+\gdef\TotalA{0} % 税前累计
+\gdef\TotalB{0}
+\gdef\TotalC{0}
+\gdef\Tax{0}
+\gdef\Net{0}
+\gdef\gross{0}
+\gdef\linesubtotal{0}
+\gdef\TempSubtotal{0}
+\newcommand{\taxrate}[1]{\renewcommand{\taxrate}{#1}}
+
+%----------------------------------------------------------------------------------------
+% 收件人信息区
+%----------------------------------------------------------------------------------------
+\newcommand{\invoicedtotable}{
+  {\footnotesize
+  \noindent
+  {\color{rulecolour}\rule{\textwidth}{0.5pt}}\\[2pt]
+  \begin{minipage}[t]{0.20\textwidth}
+    \textbf{Recipient}\\
+    {\large\textbf{\payeename}}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.175\textwidth}
+    \payeeaddress
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.175\textwidth}
+    \payeecontact
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.35\textwidth}
+    \payeeextra
+  \end{minipage}\\[2pt]
+  {\color{rulecolour}\rule{\textwidth}{0.5pt}}}
+}
+
+%----------------------------------------------------------------------------------------
+% 满版页头
+%----------------------------------------------------------------------------------------
+\newcommand{\invoiceheader}[1][3.2cm]{%
+  \AddToShipoutPictureFG*{%
+    \AtPageUpperLeft{%
+      \begin{tikzpicture}[remember picture,overlay]
+        \fill[highlightcolour] (0,0) rectangle (\paperwidth,-#1);
+        \node[text=white,align=left,anchor=west] at (1cm,-0.5*#1)
+          {{\fontsize{36}{40}\selectfont \invoicetitle}};
+        \node[anchor=north east, text=white, align=right, inner sep=0pt] at (\paperwidth-1cm,-1cm) {%
+          \footnotesize NO. \invoiceref \\
+          \footnotesize \today%
+        };
+      \end{tikzpicture}%
+    }%
+  }%
+  \vspace*{#1}\vspace{0.8cm}%
+}
+
+%----------------------------------------------------------------------------------------
+% 发票项目表格
+%----------------------------------------------------------------------------------------
+\newenvironment{invoicetable}
+{
+  \rowcolors{2}{altrowcolor}{white}
+  \begin{longtable}{@{}>{\centering\arraybackslash}p{0.05\textwidth}p{0.50\textwidth}>{\centering\arraybackslash}p{0.08\textwidth}>{\centering\arraybackslash}p{0.13\textwidth}>{\centering\arraybackslash}p{0.13\textwidth}@{}}
+    {\fontsize{8}{9.6}\selectfont\textbf{NO.}} & {\fontsize{8}{9.6}\selectfont\textbf{ITEM}} & {\fontsize{8}{9.6}\selectfont\textbf{QTY}} & {\fontsize{8}{9.6}\selectfont\textbf{UNIT PRICE (\currency)}} & {\fontsize{8}{9.6}\selectfont\textbf{SUBTOTAL (\currency)}} \\
+    \arrayrulecolor{rulecolour}\toprule[0.5pt]
+    \endfirsthead
+    
+    \multicolumn{5}{@{}l@{}}{\vspace{2cm}} \\
+    {\fontsize{8}{9.6}\selectfont\textbf{NO.}} & {\fontsize{8}{9.6}\selectfont\textbf{ITEM}} & {\fontsize{8}{9.6}\selectfont\textbf{QTY}} & {\fontsize{8}{9.6}\selectfont\textbf{UNIT PRICE (\currency)}} & {\fontsize{8}{9.6}\selectfont\textbf{SUBTOTAL (\currency)}} \\
+    \arrayrulecolor{rulecolour}\toprule[0.5pt]
+    \endhead
+    
+    \arrayrulecolor{rulecolour}\bottomrule[0.5pt]
+    \endfoot
+    
+    \arrayrulecolor{rulecolour}\bottomrule[0.5pt]
+    \\[-1em]
+    &&& Gross & \currency\space\num{\TotalA} \\
+    &&& Tax (15\%) & \currency\space\num{\fpeval{0.15*\TotalA}} \\
+    &&& Net & \currency\space\num{\fpeval{1.15*\TotalA}} \\
+    \endlastfoot
+}{
+  \end{longtable}
+}
+
+%----------------------------------------------------------------------------------------
+% 条款与应付总额
+%----------------------------------------------------------------------------------------
+\newcommand{\amountdue}{
+  {\footnotesize
+  \begin{tabular*}{\textwidth}{@{}>{\arraybackslash}m{0.55\textwidth}@{\extracolsep{\fill}}p{0.05\textwidth}@{\extracolsep{\fill}}R{0.35\textwidth}@{}}
+    \textbf{Terms and Conditions} & & \textbf{Amount Due} \\
+    \arrayrulecolor{rulecolour}\toprule[0.5pt]\\[-1.25em]
+    % 完全重新计算，不依赖任何之前的变量
+    \gdef\AmountDueTotal{0}%
+    \let\savedinvoiceitem\invoiceitem
+    \renewcommand{\invoiceitem}[5]{%
+      % 处理空格条目
+      \def\quantity{##2}%
+      \def\itemnumber{##1}%
+      \def\tempspace{ }%
+      \ifx\quantity\tempspace
+        \ifx\itemnumber\tempspace
+          \def\quantity{1}%
+        \fi
+      \fi
+      % 直接累加，不使用中间变量
+      \global\edef\AmountDueTotal{\fpeval{\AmountDueTotal+\quantity*##3}}%
+    }%
+    \invoiceitems
+    \let\invoiceitem\savedinvoiceitem
+    % 直接计算税额和净额，限制为2位小数
+    \termsandconditions & & \roundedbox{\Huge \currency\space\fpeval{round(1.15*\AmountDueTotal,2)}}\\
+  \end{tabular*}}
+}
+
+%----------------------------------------------------------------------------------------
+% 寄件方联系信息
+%----------------------------------------------------------------------------------------
+\newcommand{\contactdetails}{
+  {\footnotesize
+  \noindent
+  {\color{rulecolour}\rule{\textwidth}{0.5pt}}\\[2pt]
+  \begin{minipage}[t]{0.20\textwidth}
+    \textbf{Sender}\\
+    {\large\textbf{\sendername}}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.175\textwidth}
+    \senderaddress
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.175\textwidth}
+    \sendercontact
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.35\textwidth}
+    \senderextra
+  \end{minipage}\\[2pt]
+  {\color{rulecolour}\rule{\textwidth}{0.5pt}}}
+}
+
+%----------------------------------------------------------------------------------------
+% 发票项目行（全局更新，保证 longtable 分组下不丢值）
+%----------------------------------------------------------------------------------------
+\newcommand{\invoiceitem}[5]{%
+  % 检查号码和数量是否都是空格，如果是则设置数量为1
+  \def\quantity{#2}%
+  \def\itemnumber{#1}%
+  \def\tempspace{ }%
+  \ifx\quantity\tempspace
+    \ifx\itemnumber\tempspace
+      \def\quantity{1}%
+    \fi
+  \fi
+  \global\edef\TempSubtotal{\fpeval{\quantity*#3}}%
+  \global\edef\TotalA{\fpeval{\TotalA+\TempSubtotal}}%
+  #1 &
+  \begin{minipage}[t]{0.50\textwidth}
+    \textbf{#4} \\
+    {\fontsize{8}{9.6}\selectfont\itshape #5}
+  \end{minipage} &
+  \num{#2} & \num{#3} & \num{\TempSubtotal} \\
+}
+
+%----------------------------------------------------------------------------------------
+% 仅计算总额（不输出行）——无下划线名，避免 Missing $
+%----------------------------------------------------------------------------------------
+\newcommand{\computeinvoicetotals}{%
+  \gdef\TotalA{0}%
+  \let\savedinvoiceitem\invoiceitem
+  \renewcommand{\invoiceitem}[5]{%
+    % 检查号码和数量是否都是空格，如果是则设置数量为1
+    \def\quantity{##2}%
+    \def\itemnumber{##1}%
+    \def\tempspace{ }%
+    \ifx\quantity\tempspace
+      \ifx\itemnumber\tempspace
+        \def\quantity{1}%
+      \fi
+    \fi
+    \global\edef\TempSubtotal{\fpeval{\quantity*##3}}%
+    \global\edef\TotalA{\fpeval{\TotalA+\TempSubtotal}}%
+  }%
+  \invoiceitems
+  \let\invoiceitem\savedinvoiceitem
+}
+
+%----------------------------------------------------------------------------------------
+% 发票环境
+%----------------------------------------------------------------------------------------
+\newenvironment{invoice}
+{
+  \gdef\TotalA{0}\gdef\TotalB{0}\gdef\TotalC{0}\gdef\Tax{0}\gdef\Net{0}\gdef\TempSubtotal{0}
+  \thispagestyle{fancy}
+  \invoiceheader[3.2cm]
+  \invoicedtotable
+  \vspace{0.5cm}
+  \vfill
+}{
+  \vfill
+  \amountdue
+  \vfill
+  \contactdetails
+}
+
+%----------------------------------------------------------------------------------------
+% 主发票生成命令：先预计算，再输出表格
+%----------------------------------------------------------------------------------------
+\newcommand{\maininvoice}{
+  \begin{invoice}
+    \computeinvoicetotals
+    % 在表格输出前保存正确的TotalA值
+    \global\edef\FinalTotalA{\TotalA}%
+    \begin{invoicetable}
+      \invoiceitems
+    \end{invoicetable}
+  \end{invoice}
+}

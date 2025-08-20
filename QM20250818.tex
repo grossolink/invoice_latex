@@ -1,0 +1,90 @@
+%----------------------------------------------------------------------------------------
+% 发票内容定义文件
+%----------------------------------------------------------------------------------------
+
+\input{invoice.tex}
+
+%----------------------------------------------------------------------------------------
+% 货币单位设置（用户可自定义）
+%----------------------------------------------------------------------------------------
+\newcommand{\currency}{EUR}
+
+%----------------------------------------------------------------------------------------
+% 发票基本信息
+%----------------------------------------------------------------------------------------
+\taxrate{0.15}
+
+\invoiceref{1632-F}
+\invoiceissued{September 23, 2021}
+\invoicedue{September 30, 2021}
+\projectname{Sensor Components}
+
+%----------------------------------------------------------------------------------------
+% 收件人信息
+%----------------------------------------------------------------------------------------
+\payeename{Sensitec GmbH}
+\payeeaddress{Schanzenfeldstr. 2 \\ D-35578 Wetzlar \\ Deutschland}
+\payeecontact{info@sensitec.com \\ www.sensitec.com \\ +49-6441-9719-0}
+\payeeextra{Project: Sensor Components \\ PPC: John Smith}
+
+%----------------------------------------------------------------------------------------
+% 寄件方信息 / 页头标题
+%----------------------------------------------------------------------------------------
+\invoicetitle{INVOICE}
+\sendername{Grosso Link GMBH}
+\senderaddress{Rue des Sugiez 18 \\ 2074 Marin-Epagnier \\ Switzerland}
+\sendercontact{contacts@grosso.link \\ http://grosso.link \\ +41 788885186}
+\senderextra{Sales Rep: Yin GAO \\ Account ID: GL-2024-001}
+
+%----------------------------------------------------------------------------------------
+% 发票项目列表
+%----------------------------------------------------------------------------------------
+% 使用 \invoiceitem{序号}{数量}{单价}{产品名称(加粗)}{详细描述(多行80%斜体小字体)}
+\newcommand{\invoiceitems}{%
+  \invoiceitem{1}{1}{118.80}{Conntek EVM5700} 
+                            { 
+                            EVM for Low Power, High Precision \\ 
+                            Unit: SET \quad L/T: In Stock 
+                            }
+  \invoiceitem{2}{5}{0.55}{Conntek 5701AQ3QNS} 
+                            { 
+                            3D Hal sensor IC, consumer grade, QFN3x3-16L \\ 
+                            Unit: PCS \quad L/T: In Stock 
+                            }
+  \invoiceitem{3}{10}{2.00}{Conntek KTM1301TE-TO3} 
+                            { 
+                            TMR switch \\ 
+                            Unit: PCS 
+                            }
+  \invoiceitem{4}{10}{3.00}{Conntek KTM1301TD-TO3} 
+                            { 
+                            TMR switch \\ 
+                            Unit: PCS 
+                            }
+  \invoiceitem{5}{1}{25.00}{Logistic service} 
+                            { 
+                            Small parcel to EU country < 500g, with tracking number 
+                            }
+ 
+}
+
+
+
+%----------------------------------------------------------------------------------------
+% 条款条件
+%----------------------------------------------------------------------------------------
+\termsandconditions{
+\textbf{Stock Status:} Item 1 and 2 are currently in stock, ready to ship. Item 3 and 4 are free samples. 
+\newline\newline 
+\textbf{Payment Terms:} TT in advance \newline 
+\textbf{Validity Period:} till 30th Aug 2025 \newline 
+\textbf{Delivery Cost:} The price does not include freight insurance \newline 
+\textbf{Currency:} EUR \newline \textbf{Warranty Period:} 12 months since delivery date \newline 
+\textbf{Date Code:} within 6 months \newline
+\textbf{Remarks:} L/T can be shorter when ordering small quantities
+}
+
+
+\begin{document}
+\maininvoice
+\end{document}
