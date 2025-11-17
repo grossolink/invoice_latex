@@ -1,0 +1,75 @@
+%----------------------------------------------------------------------------------------
+% 发票内容定义文件
+%----------------------------------------------------------------------------------------
+
+\input{invoice.tex}
+
+\invoicetitle{INVOICE}
+
+%----------------------------------------------------------------------------------------
+% 货币单位设置（用户可自定义）
+%----------------------------------------------------------------------------------------
+\newcommand{\currency}{CHF}
+
+%----------------------------------------------------------------------------------------
+% 发票基本信息
+%----------------------------------------------------------------------------------------
+\taxrate{0.15}
+
+\invoiceref{2025-024}
+\invoiceissued{August 5, 2025}
+\invoicedue{September 4, 2025}
+\projectname{Fiorenzato}
+
+%----------------------------------------------------------------------------------------
+% 收件人信息
+%----------------------------------------------------------------------------------------
+\payeename{DELCO Sistemi SRL}
+\payeeaddress{via Dolomiti 21 \\ San Martino di Lupari \\ Padova, 35018, Italy \\ Partita Iva 03026650261}
+\payeecontact{ Mr. Enrico Forato \\ e.forato@delco.it \\ www.delco.it \\ +39 348 570 2544}
+\payeeextra{Project: Fiorenzato }
+
+%----------------------------------------------------------------------------------------
+% 寄件方信息 / 页头标题
+%----------------------------------------------------------------------------------------
+\sendername{Grosso Link GMBH}
+\senderaddress{Rue des Sugiez 18 \\ 2074 Marin-Epagnier \\ Switzerland}
+\sendercontact{contacts@grosso.link \\ http://grosso.link \\ +41 788885186}
+\senderextra{Sales Rep: Ban Wang \\ ban.wang@gross.link \\ VAT number: CHE-344.078.948}
+
+%----------------------------------------------------------------------------------------
+% 条款条件
+%----------------------------------------------------------------------------------------
+\termsandconditions{\textbf{Stock Status:} Item 1 is currently in stock, ready to ship. Item 2 and 3 are free samples, for demo purpose. \newline
+\newline \textbf{IBAN:} CH73 0900 0000 8564 7265 1
+\newline \textbf{SWIFT-code} POFICHBEXXX
+\newline \textbf{Incoterm:} EXW 
+\newline \textbf{Currency:} CHF
+\newline \textbf{Warranty Period:} 12 months since delivery date 
+\newline \textbf{Date Code:} within 6 months}
+
+%----------------------------------------------------------------------------------------
+% 发票项目列表
+%----------------------------------------------------------------------------------------
+% 使用 \invoiceitem{序号}{数量}{单价}{产品名称(加粗)}{详细描述(多行80%斜体小字体)}
+\newcommand{\invoiceitems}{%
+  \invoiceitem{1}{1000}{1.23}{Conntek KTH7801-X-C-SOP8} 
+                            { 
+                            Hall Magnetic Encoder IC 16 Bit 3.0-5.5V SOP-8 \\ 
+                            Unit: PCS \quad L/T: In Stock 
+                            }
+  \invoiceitem{2}{1}{0.00}{Conntek 5701EVM} 
+                            { 
+                            Demo of KTH5701 series \\ 
+                            Unit: SET \quad L/T: In Stock 
+                            }
+  \invoiceitem{3}{30}{0.00}{Conntek Company Brochures} 
+                            { 
+                            Brochures \\ 
+                            Unit: PCS 
+                            }
+}
+
+\begin{document}
+\maininvoice
+\end{document}

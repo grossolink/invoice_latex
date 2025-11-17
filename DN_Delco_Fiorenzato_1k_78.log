@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.7.8)  29 AUG 2025 10:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.7.8)  29 AUG 2025 10:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**QM20250818.tex
-(./QM20250818.tex
+**DN_Delco_Fiorenzato_1k_78.tex
+(./DN_Delco_Fiorenzato_1k_78.tex
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-06-09>
 (./invoice.tex (c:/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -628,8 +628,8 @@ Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
 \tcb@temp=\box89
 ))
 Package translations Info: No language package found. I am going to use `englis
-h' as default language. on input line 90.
-LaTeX Font Info:    Trying to load font information for T1+qag on input line 90
+h' as default language. on input line 68.
+LaTeX Font Info:    Trying to load font information for T1+qag on input line 68
 .
 
 (c:/texlive/2025/texmf-dist/tex/latex/tex-gyre/t1qag.fd
@@ -639,23 +639,23 @@ File: t1qag.fd 2009/09/25 v1.2 font definition file for T1/qag
 File: l3backend-pdftex.def 2025-06-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count353
 )
-(./QM20250818.aux)
-\openout1 = `QM20250818.aux'.
+(./DN_Delco_Fiorenzato_1k_78.aux)
+\openout1 = `DN_Delco_Fiorenzato_1k_78.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 90.
-LaTeX Font Info:    ... okay on input line 90.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 68.
+LaTeX Font Info:    ... okay on input line 68.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -719,20 +719,15 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 90.
+or `english'. on input line 68.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 91.
+(Font)              <8> on input line 69.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 91.
+(Font)              <6> on input line 69.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 91.
+(Font)              <5> on input line 69.
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--91
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 69--70
 
  []
 
@@ -741,32 +736,45 @@ Underfull \hbox (badness 10000) in paragraph at lines 91--92
 <logo.png, id=4, 481.8pt x 207.77625pt>
 File: logo.png Graphic file (type png)
 <use logo.png>
-Package pdftex.def Info: logo.png  used on input line 92.
+Package pdftex.def Info: logo.png  used on input line 70.
 (pdftex.def)             Requested size: 98.96077pt x 42.67912pt.
+
+LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 70.
+
 [1
 
 {c:/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/texlive/2025/
 texmf-dist/fonts/enc/dvips/tex-gyre/q-ec.enc} <./logo.png>]
 
 enddocument/afterlastpage (AED): lastpage setting LastPage.
-(./QM20250818.aux)
+(./DN_Delco_Fiorenzato_1k_78.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-06-09>
  ***********
+
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package lastpage Warning: Rerun to get the references right on input line 70.
+
  ) 
 Here is how much of TeX's memory you used:
- 21376 strings out of 467888
- 478270 string characters out of 5438241
- 857909 words of memory out of 5000000
- 49586 multiletter control sequences out of 15000+600000
+ 21378 strings out of 467888
+ 478502 string characters out of 5438241
+ 850240 words of memory out of 5000000
+ 49588 multiletter control sequences out of 15000+600000
  653762 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 89i,15n,90p,430b,795s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 89i,15n,90p,445b,795s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2025/texmf-dist/fonts/type1/public/tex-gyre/qagb.pfb><c:/texlive/
 2025/texmf-dist/fonts/type1/public/tex-gyre/qagr.pfb><c:/texlive/2025/texmf-dis
 t/fonts/type1/public/tex-gyre/qagri.pfb>
-Output written on QM20250818.pdf (1 page, 123095 bytes).
+Output written on DN_Delco_Fiorenzato_1k_78.pdf (1 page, 120645 bytes).
 PDF statistics:
  30 PDF objects out of 1000 (max. 8388607)
  18 compressed objects within 1 object stream
