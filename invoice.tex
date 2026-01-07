@@ -112,11 +112,12 @@
 \gdef\TotalB{0}
 \gdef\TotalC{0}
 \gdef\Tax{0}
+\gdef\TaxRate{0}
 \gdef\Net{0}
 \gdef\gross{0}
 \gdef\linesubtotal{0}
 \gdef\TempSubtotal{0}
-\newcommand{\taxrate}[1]{\renewcommand{\taxrate}{#1}}
+\newcommand{\taxrate}[1]{\gdef\TaxRate{#1}}
 
 %----------------------------------------------------------------------------------------
 % 收件人信息区
@@ -183,8 +184,8 @@
     \arrayrulecolor{rulecolour}\bottomrule[0.5pt]
     \\[-1em]
     &&& Gross & \currency\space\num{\TotalA} \\
-    &&& Tax (15\%) & \currency\space\num{\fpeval{0.15*\TotalA}} \\
-    &&& Net & \currency\space\num{\fpeval{1.15*\TotalA}} \\
+    &&& Tax (\num{\fpeval{100*\TaxRate}}\%) & \currency\space\num{\fpeval{\TaxRate*\TotalA}} \\
+    &&& Net & \currency\space\num{\fpeval{(1+\TaxRate)*\TotalA}} \\
     \endlastfoot
 }{
   \end{longtable}
@@ -217,7 +218,7 @@
     \invoiceitems
     \let\invoiceitem\savedinvoiceitem
     % 直接计算税额和净额，限制为2位小数
-    \termsandconditions & & \roundedbox{\Huge \currency\space\fpeval{round(1.15*\AmountDueTotal,2)}}\\
+    \termsandconditions & & \roundedbox{\Huge \currency\space\fpeval{round((1+\TaxRate)*\AmountDueTotal,2)}}\\
   \end{tabular*}}
 }
 

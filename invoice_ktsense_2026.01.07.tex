@@ -1,0 +1,77 @@
+%----------------------------------------------------------------------------------------
+% 发票内容定义文件
+%----------------------------------------------------------------------------------------
+
+\input{invoice.tex}
+
+
+\invoicetitle{INVOICE}
+
+%----------------------------------------------------------------------------------------
+% 货币单位设置（用户可自定义）
+%----------------------------------------------------------------------------------------
+\newcommand{\currency}{EUR}
+
+%----------------------------------------------------------------------------------------
+% 发票基本信息
+%----------------------------------------------------------------------------------------
+\taxrate{0.00}
+
+\invoiceref{1632-F}
+\invoiceissued{September 23, 2021}
+\invoicedue{September 30, 2021}
+\projectname{Sensor Components}
+
+%----------------------------------------------------------------------------------------
+% 收件人信息
+%----------------------------------------------------------------------------------------
+\payeename{Quanzhou KTsense Microelectronics Co.,Ltd.}
+\payeeaddress{\ \\Room B501\\ Huaqiao University Innovation Park, Tiyu Street  }
+\payeecontact{\ \\Fengze Dist. Quanzhou\\ Fujian 362011\\ China}
+\payeeextra{\ \\  }
+
+%----------------------------------------------------------------------------------------
+% 寄件方信息 / 页头标题
+%----------------------------------------------------------------------------------------
+\sendername{Grosso Link GMBH}
+\senderaddress{St. Jakobstrasse 58 \\ 6330 Cham \\ Switzerland}
+\sendercontact{contacts@grosso.link \\ http://grosso.link \\ +41 788885186}
+\senderextra{Sales Rep: Yin GAO \\ Account ID: GL-2024-001}
+
+%----------------------------------------------------------------------------------------
+% 发票项目列表
+%----------------------------------------------------------------------------------------
+% 使用 \invoiceitem{序号}{数量}{单价}{产品名称(加粗)}{详细描述(多行80%斜体小字体)}
+\newcommand{\invoiceitems}{%
+  \invoiceitem{1}{1}{15000}{Conference services Fees} 
+                            { 
+                            Conference: SPS 2025 \\ 
+							Exhibitor assistance \\
+							Local manpower support 
+                            } 
+
+ 
+}
+
+
+
+%----------------------------------------------------------------------------------------
+% 条款条件
+%----------------------------------------------------------------------------------------
+\termsandconditions{
+ Kindly remit the amount of this invoice to:
+\newline\newline 
+\textbf{IBAN}: CH15 0900 0000 9135 9437 6 \newline
+\textbf{SWIFT-Code}: POFICHBEXXX \newline
+\textbf{Currency}: EUR \newline
+
+\textbf{Benefit}: \newline Grosso Link Sàrl, St. Jakobstrasse 58, 6330 Cham, Switzerland \newline
+
+\textbf{Bank information}: \newline PostFinance Ltd, Mingerstrasse 20, 3030 Bern, Switzerland \newline
+ 
+}
+
+
+\begin{document}
+\maininvoice
+\end{document}
